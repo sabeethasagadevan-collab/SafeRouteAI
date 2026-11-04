@@ -1,0 +1,2 @@
+# Backend requirements are in backend/requirements.txt.
+# From project root: python -m pip install -r backend/requirements.txt
