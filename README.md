@@ -1,3 +1,4 @@
+
 # SafeRoute AI
 
 **AI-Based Local Emergency & Hazard Alert System with Smart Route Optimization and Voice Navigation**
@@ -115,3 +116,4 @@ The dataset must have numeric feature columns and a labelled target column. The 
 - `ml/` — training/evaluation/prediction scaffolding
 - `tests/` — automated tests
 - `docs/` — project and algorithm documentation
+
