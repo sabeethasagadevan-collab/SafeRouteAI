@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1727">
+  <title>SafeRoute AI — Smarter journeys</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="#"><span class="brand-mark">S</span><span>SafeRoute <b>AI</b><small>SMARTER JOURNEYS, BETTER AWARENESS</small></span></a>
+  <div class="top-status"><span class="status-dot"></span><span id="connectionStatus">Connecting to service…</span></div>
+</header>
+<main class="layout">
+  <section class="left-panel">
+    <div class="eyebrow">ROUTE PLANNER</div>
+    <h1>Travel with<br><span>more awareness.</span></h1>
+    <p class="intro">Compare routes with available weather, traffic and hazard information before you leave.</p>
+    <form id="routeForm" class="route-form">
+      <label for="startInput">Starting point</label>
+      <div class="input-wrap"><span class="pin start-pin"></span><input id="startInput" placeholder="Use current location or enter a place" autocomplete="street-address"><button type="button" id="gpsButton" class="icon-btn" title="Use current location" aria-label="Use current location">◎</button></div>
+      <div id="gpsMessage" class="field-hint">GPS uses your browser permission. You can also type an address.</div>
+      <label for="destinationInput">Destination</label>
+      <div class="input-wrap"><span class="pin end-pin"></span><input id="destinationInput" placeholder="Where do you want to go?" autocomplete="street-address"><button type="button" id="voiceButton" class="icon-btn" title="Speak destination" aria-label="Speak destination">🎙</button></div>
+      <div class="mode-row"><span>Travel mode</span><div class="mode-options"><label><input type="radio" name="mode" value="car" checked><span>🚗 Car</span></label><label><input type="radio" name="mode" value="bike"><span>🚲 Bike</span></label><label><input type="radio" name="mode" value="walking"><span>🚶 Walk</span></label></div></div>
+      <button class="primary-btn" type="submit" id="findButton"><span>Find route</span><span aria-hidden="true">↗</span></button>
+    </form>
+    <div id="errorBox" class="notice error hidden" role="alert"></div>
+    <div id="routeSummary" class="route-summary hidden">
+      <div class="summary-heading"><span>ROUTE OVERVIEW</span><span id="routeCount" class="mini-pill">—</span></div>
+      <div class="summary-stats"><div><small>Distance</small><strong id="distanceValue">—</strong></div><div><small>Estimated time</small><strong id="durationValue">—</strong></div></div>
+      <p id="routeNote" class="route-note"></p>
+      <div class="action-row"><button id="startNavButton" class="primary-btn compact">Start navigation</button><button id="stopNavButton" class="secondary-btn compact" disabled>Stop</button></div>
+    </div>
+    <div class="data-note"><span class="info-icon">i</span><span>Risk indicators depend on available data. Estimates are not official emergency warnings and cannot guarantee a safe route.</span></div>
+  </section>
+  <section class="main-panel">
+    <div class="map-topline"><div><h2>Your journey</h2><p id="mapSubtitle">Enter a start point and destination to compare routes.</p></div><span class="map-tag"><span class="live-dot"></span> MAP VIEW</span></div>
+    <div class="map-shell"><div id="map" aria-label="Route map"></div><div id="mapLoading" class="map-loading hidden"><span class="spinner"></span> Finding available routes…</div><div class="map-legend"><span><i class="legend-start"></i> Start</span><span><i class="legend-end"></i> Destination</span><span><i class="legend-route"></i> Route</span></div></div>
+    <div class="section-heading"><div><h2>Conditions along your route</h2><p>Latest available information and clearly labelled estimates</p></div><button id="refreshWeatherButton" class="subtle-btn" disabled>↻ Refresh</button></div>
+    <div class="cards-grid">
+      <article class="info-card weather-card"><div class="card-top"><span class="card-icon weather-icon">☔</span><span class="source-tag">FORECAST</span></div><h3>Rain & weather</h3><div id="weatherMain" class="weather-main">Awaiting route</div><p id="weatherDetail" class="card-description">Find a route to view the upcoming hourly forecast near your journey.</p><div id="rainTimeline" class="rain-timeline"></div><div id="weatherSource" class="card-foot">Source: Open-Meteo · no API key required</div></article>
+      <article class="info-card"><div class="card-top"><span class="card-icon traffic-icon">⇄</span><span id="trafficBadge" class="risk-badge unknown">UNKNOWN</span></div><h3>Traffic conditions</h3><div id="trafficMain" class="metric-main">Not checked</div><p id="trafficDetail" class="card-description">Live road-flow data is only shown when the traffic service responds successfully.</p><div id="trafficFoot" class="card-foot">Source: TomTom · optional API key</div></article>
+      <article class="info-card"><div class="card-top"><span class="card-icon hazard-icon">⌁</span><span id="hazardBadge" class="risk-badge unknown">UNKNOWN</span></div><h3>Weather-related hazard</h3><div id="hazardMain" class="metric-main">Not assessed</div><p id="hazardDetail" class="card-description">A limited rule-based estimate needs usable forecast inputs; it is not an official warning.</p><div id="hazardFoot" class="card-foot">Experimental estimate</div></article>
+      <article class="info-card"><div class="card-top"><span class="card-icon incident-icon">!</span><span id="incidentBadge" class="risk-badge unknown">UNKNOWN</span></div><h3>Road incidents</h3><div id="incidentMain" class="metric-main">Not checked</div><p id="incidentDetail" class="card-description">No incident result is assumed when the incident service is unavailable.</p><div id="incidentFoot" class="card-foot">Source: optional provider integration</div></article>
+    </div>
+    <div class="recommendation" id="recommendation"><div class="recommend-icon">✦</div><div><strong>Route recommendation</strong><p>Find a route to see an evidence-based summary. Missing data will be shown as unknown, not treated as zero risk.</p></div></div>
+    <div class="safety-strip"><span>ⓘ</span><p><b>Before you travel:</b> Check local authority alerts and road closures. SafeRoute AI is a decision-support prototype, not a replacement for official emergency guidance.</p></div>
+  </section>
+</main>
+<footer>SafeRoute AI <span>•</span> College project prototype <span>•</span> Live data availability varies by provider</footer>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="script.js"></script>
+</body></html>
