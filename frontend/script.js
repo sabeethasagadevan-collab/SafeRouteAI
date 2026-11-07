@@ -1,8 +1,12 @@
 
 (() => {
   "use strict";
+<<<<<<< Updated upstream
 
-  const API_BASE = "http://127.0.0.1:8000";
+  const API_BASE = "https://saferouteai-1-5kc6.onrender.com";
+=======
+  const API_BASE = "https://saferouteai-1-5kc6.onrender.com";
+>>>>>>> Stashed changes
   const $ = (id) => document.getElementById(id);
 
   const state = {
