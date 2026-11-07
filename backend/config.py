@@ -7,7 +7,7 @@ class Settings(BaseSettings):
     tomtom_api_key: str = ""
     tomtom_flow_endpoint: str = "https://api.tomtom.com/traffic/services/4/flowSegmentData/relative/10/json"
     tomtom_incident_endpoint: str = ""
-    cors_origins: str = "http://127.0.0.1:5500,http://localhost:5500,http://127.0.0.1:8080,http://localhost:8080"
+    cors_origins: str = "http://127.0.0.1:5500,http://localhost:5500,http://127.0.0.1:8080,http://localhost:8080,https://saferouteai-2.onrender.com"
     request_timeout_seconds: float = 10.0
     model_path: str = "../ml/models/risk_model.joblib"
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
